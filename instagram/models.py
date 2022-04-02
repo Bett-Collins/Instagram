@@ -1,5 +1,6 @@
+from msilib.schema import Property
 from django.db import models
-from django.contrib.models import User
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Profile(models.Model):
@@ -15,3 +16,44 @@ class Profile(models.Model):
         
     def delete_profile(self):
         self.delete()
+        
+    @classmethod
+    def update_profile(self):
+        profile=Profile.objects.get_or_create()
+        return profile  
+
+class Image(models.Model):
+    image=models.ImageField(blank=True,null=False)
+    name=models.CharField(max_length=100)
+    caption=models.TextField(max_length=400)
+    liked=models.ManyToManyField(User,default=0,blank=True,related_name='liked')
+    comments=models.TextField(max_length=100)
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE,null=True)
+    author=models.ForeignKey(User,on_delete=models.CASCADE,related_name='author',null=True)
+
+    def __str__(self):
+        return self.name
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
+        
+    @classmethod
+    def update_caption(self):
+        caption=Image.objects.get_or_create()
+        return caption
+    @Property
+    def num_likes(self):
+        return self.likes.all().count()
+    LIKE_CHOICES=(
+    ('Like','Like'),
+    ('Unlike','Unlike')   
+    )
+    
+class Like(models.Model):
+        
+        
+        
+    
