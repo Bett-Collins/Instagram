@@ -5,3 +5,4 @@ from django.http import HttpResponse
 def say_hello(request):
     name='Instagram'
     return render(request,'index.html',{'name': name})
+
