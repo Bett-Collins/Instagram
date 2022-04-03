@@ -60,4 +60,6 @@ class Like(models.Model):
     def __str__(self):
        return self.image
         
-    
+class Following(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)  
+    followed=models.OneToOneField(User,null=True,related_name='followed',on_delete=models.CASCADE)
