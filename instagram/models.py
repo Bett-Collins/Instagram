@@ -63,3 +63,11 @@ class Like(models.Model):
 class Following(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)  
     followed=models.OneToOneField(User,null=True,related_name='followed',on_delete=models.CASCADE)
+    
+    @classmethod
+    def follow(cls,User,another_account):
+        obj=Following.objects.all()
+        obj.create=cls.objects.get_or_create(user=user)
+        obj.followed.remove(another_account)
+        print('unfollowed')
+    
