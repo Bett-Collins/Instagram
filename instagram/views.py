@@ -64,6 +64,18 @@ def loginpage(request):
         context ={'photos':photos,'user':user}
         return render (REQUEST,'welcome.html',context)
         
-     
+    @login_required
+    def profile(request):
+        if request.methof == 'POST':
+            u_form = UpdateprofileForm(request.POST,instance=request.user)
+            p_form = UpdateprofileForm(request.POST,request.FILES,instance=request.user.profile)
+           
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            
+            return render(request, 'profile.html',context)
+                
+            
              
         
