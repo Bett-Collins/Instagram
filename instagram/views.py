@@ -1,3 +1,4 @@
+from tkinter import E
 from django import forms
 from django.contrib.auth.models import User
 from django.db.models.fields import json
@@ -86,6 +87,32 @@ def search_results(request):
         searched_profiles = Profile.search_profile(search_term)
         message = f'{search_term}'   
         
-        return render(request, 'search.html', {'message':message,'photos': searched_profiles})    
+        return render(request, 'search.html', {'message':message,'photos': searched_profiles})
+    
+    
+    else:
+        message = 'You have not searched for any term' 
+        return render(request, 'search.html', {'message':message})
+    
+    
+    @login_required(login_url='login/')
+def like(request):
+    user=request.user
+    if request.method=='POST':
+        image_id=request.POST.get('image_id')
+        image_obj=Image.objects.get(id=image_id)
+
+        if user in image_obj.liked.all():
+            image_obj.liked.remove(user)
+        else:
+            image_obj.liked.add(user)
+        like,created=Like.objects.get_or_create(user=user,image_id=image_id)
+        if not created:
+            if like.value=='Like':
+                like.value='Unlike'
+            else:
+                like.value='Like'
+        like.save()
+        return redirect('welcome')
              
         
