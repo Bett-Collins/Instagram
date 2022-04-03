@@ -114,5 +114,19 @@ def like(request):
                 like.value='Like'
         like.save()
         return redirect('welcome')
+    
+    def uploadImage(request):
+    if request.method == "POST":
+
+        form=ImageForm(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            form.save()
+            obj=form.instance
+        return redirect('welcome')
+    else:
+        form=ImageForm()
+        img=Image.objects.all()
+    return render(request,"index.html",{"form":form})
+
              
         
