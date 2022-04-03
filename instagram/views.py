@@ -36,5 +36,12 @@ def registeruser(request):
     }   
     
     return render(request, 'register.html',context) 
+
+def loginpage(request):
+    if request.method == 'POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        
+    user = authenticate(request,username=username)
              
         
