@@ -79,3 +79,10 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     activate = models.BooleanField(default=False)
     
+    class Meta:
+        ordering = ['created_on']
+        
+def __str__(self):
+    return 'Comment {} by {}' .format(self.body,self.name)
+        
+    
