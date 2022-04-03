@@ -64,6 +64,6 @@ def loginpage(request):
         context ={'photos':photos,'user':user}
         return render (REQUEST,'welcome.html',context)
         
-
+     
              
         
