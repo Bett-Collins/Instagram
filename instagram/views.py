@@ -42,15 +42,17 @@ def loginpage(request):
         username=request.POST.get('username')
         password=request.POST.get('password')
         
-    user = authenticate(request,username=username,password=password)
+        user = authenticate(request,username=username,password=password)
     if user is not None:
         login(request,user)
         return redirect(reverse('welcome'))
     else:
         messages.info(request,'Username or password is incorrect')
         
+        
         context={}
         return render(request,'login.html',context)
+    
     
     @login_required(login_url='login')
     def logout(request):
@@ -74,8 +76,16 @@ def loginpage(request):
             u_form.save()
             p_form.save()
             
-            return render(request, 'profile.html',context)
-                
             
+            return render(request, 'profile.html', context)
+        
+                
+def search_results(request):
+    if 'photo' in  request.GET and request.GET['photos']:
+        search_term = request.GET.get('photos')
+        searched_profiles = Profile.search_profile(search_term)
+        message = f'{search_term}'   
+        
+        return render(request, 'search.html', {'message':message,'photos': searched_profiles})    
              
         
