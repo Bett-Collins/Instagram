@@ -70,4 +70,12 @@ class Following(models.Model):
         obj.create=cls.objects.get_or_create(user=user)
         obj.followed.remove(another_account)
         print('unfollowed')
+        
+class Comment(models.Model):
+    post = models.ForeignKey(Image,on_delete=models.CASCADE,related_name='comment')
+    name = models.CharField(MAX_LENGTH=80)
+    email = models.EmailField()
+    body = models.TimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    activate = models.BooleanField(default=False)
     
