@@ -2,12 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.db.models.fields import json
 from django.http import response
-from django.http  import Http404
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Following, Image, Like,Profile,Comment
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout as dj_login
 from django.urls import reverse
@@ -51,7 +49,7 @@ def loginpage(request):
             messages.info(request,'Username or password is incorrect')
        
     context={}
-    return render(request,'registration/login.html',context)
+    return render(request,'login.html',context)
     
 @login_required(login_url='login')
 def logout(request):
@@ -91,6 +89,30 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 
+
+# def profilepage(username,request):
+#     user=User.objects.filter(username)
+#     if user:
+#     # current_user = request.user
+#         profile = Profile.objects.get(user=user)
+#         bio=profile.bio
+        
+#     if request.method == "POST":
+#         form=ImageForm(data=request.POST,files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             obj=form.instance
+#             return redirect(reverse("profile.html",{"obj":obj}))
+#         else:
+#             form=ImageForm()
+#         img=Image.objects.all()
+#         return render(request,'profile.html', {'img':img,'form':form})
+    
+
+    # context={'u_form':u_form,'p_form':p_form,'current_user':current_user,'profile':profile}
+
+    # return render(request,'profile.html',context=context)
+
 def search_results(request):
     if 'photos' in request.GET and request.GET["photos"]:
         search_term = request.GET.get("photos")
@@ -123,44 +145,22 @@ def like(request):
         like.save()
         return redirect('welcome')
 
-# def uploadImage(request):
-#     if request.method == "POST":
-
-#         form=ImageForm(data=request.POST,files=request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             obj=form.instance
-#         return redirect('welcome')
-#     else:
-#         form=ImageForm()
-#         img=Image.objects.all()
-#     return render(request,"index.html",{"form":form})
-
-
-@login_required(login_url='/accounts/login/')
 def uploadImage(request):
-    if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
+    if request.method == "POST":
+
+        form=ImageForm(data=request.POST,files=request.FILES)
         if form.is_valid():
             form.save()
+            obj=form.instance
         return redirect('welcome')
-
     else:
-        form = ImageForm()
+        form=ImageForm()
         img=Image.objects.all()
-    return render(request, 'index.html', {"form": form})
+    return render(request,"index.html",{"form":form})
 
 def viewPhoto(request,pk=int):
     photo=Image.objects.get(id=pk)
     return render(request,'photo.html',{'photo':photo})
-
-
-def image(request,image_id):
-    try:
-        image = Image.objects.get(id = image_id)
-    except ObjectDoesNotExist:
-        raise Http404()
-    return render(request,"image.html", {"image":image})
 
 def follow(request,username):
     obj=Following.objects.all()
