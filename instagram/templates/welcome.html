@@ -15,7 +15,7 @@
                 <a style="text-decoration: none;" href="{%url 'photo' photo.id %}"
                     class="btn btn-outline-light btn-sm m-1">
 
-                    <img class="image-thumbail" src="{{ photo.image.url }}" width="700px" height="500px"
+                    <img class="image-thumbail" src="{{ img.image.url }}" width="700px" height="500px"
                         alt="Card image cap"></a> 
                 <form action="{% url 'like'%}" method="POST">
                     {% csrf_token%}
