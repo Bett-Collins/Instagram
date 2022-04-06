@@ -1,1 +1,1 @@
-web: gallery.wsgi --log-file -
+web: instagram.wsgi --log-file -
