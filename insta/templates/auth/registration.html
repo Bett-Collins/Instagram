@@ -1,0 +1,60 @@
+{% extends 'auth/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+{{block.super}}
+
+<style>
+  .border{
+    border-style: solid;
+    border-color: lightgray;
+    border-left: none;
+    border-radius: 5px;
+    border-width: thin;
+  }
+  li{
+    display: none;
+  }
+  #flex{
+   display: flex; 
+  }
+  .btn{
+    padding: 3px 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    width:100%;
+    border-width: thin;
+  }
+</style>
+
+<div class="row">
+  <div class="col-md-5 container">
+    <img src="../../../static/img/phones.jpg" alt="" srcset="" width="500" height="700">
+  </div>
+  <div class=" container col-md-7">
+    <div class="container mt-5">
+      
+         
+          <form action="" method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+            
+            
+              <label for="" class="border-bottom mb-4 text-center" style="margin-left: 35%;margin-top: 5px;"><img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt=""> </label> <br> <h6 class="text-center">Sign up to see photos and videos from your friends.</h6>
+              
+              {{form|crispy}}
+            </fieldset>
+            
+            <div class="form-group">
+              <button class="btn btn-sm btn-primary" type="submit">Sign Up</button>
+            </div>
+            <div class="text-center" style="border:1px solid rgb(223, 215, 215) ;padding: 1.5em;">
+              Have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
+            </div>
+          </form>
+  </div>  
+       
+
+
+</div>
+{% endblock %}
