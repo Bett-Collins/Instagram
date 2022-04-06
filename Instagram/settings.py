@@ -23,8 +23,11 @@ cloudinary.config(
     cloud_name="alikutepa",
     api_key="541438742649131",
     api_secret="JmpoK9k79IFczRf7Bx1fDno4JEY",
-    secure=True
+    secure=True,
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    
 )
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 MODE = config("MODE", default="dev")
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = DEBUG =True
 
 
 INSTALLED_APPS = [
@@ -46,6 +49,9 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'ckeditor',
+    'cloudinary',
+    'insta',
+    
 ]
 
 MIDDLEWARE = [
@@ -163,6 +169,6 @@ LOGIN_URL = 'login'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 django_on_heroku.settings(locals())
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
